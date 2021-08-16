@@ -1,5 +1,5 @@
 ## Exploratory Data Analysis - Week 1 - Course Project 1
-## Plot 1
+## Plot 2
 
 ## Download and read data and format Date and Tome variables
 power.file <- "~/Desktop/Gorkin\ Lab/Coursera/household_power_consumption.txt"
@@ -15,14 +15,17 @@ head(powerdt)
 ##Subset data to dates 2007-02-01 and 2007-02-02
 powersubset <- subset(powerdt, Date == "2007-02-01" | Date == "2007-02-02")
 
-## Create Plot 1
-hist(powersubset$Global_active_power, freq = TRUE, col = "red", 
-     main = "Global Active Power", 
-     xlab = "Global Active Power (kilowatts)", 
-     ylab = "Frequency")
+## Create dateTime variable 
+dateTime <- paste(powersubset$Date, powersubset$Time)
+powersubset$dateTime <-  dateTime
+powersubset$dateTime <- as.POSIXlt(powersubset$dateTime)
+
+## Create Plot 2
+plot(powersubset$dateTime, powersubset$Global_active_power, 
+     type="l", xlab="", ylab="Global Active Power (kilowatts)")
 
 ## Copy plot into png file 
-dev.copy(png, file = "plot1.png")
+dev.copy(png, file = "plot2.png")
 
 ## Close PNG device
 dev.off()
